@@ -617,6 +617,13 @@ input[type=range]::-moz-range-thumb{
 .player.is-live .bars i{background:var(--gold-light);animation:wv 1s ease-in-out infinite}
 .player .time{font-size:.86rem;color:var(--deep-muted);flex:none}
 .player-note{font-size:.88rem;color:var(--muted);margin-top:14px}
+.live-try{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
+  margin-top:28px;padding:20px 22px;border:1px solid var(--gold);border-radius:var(--r-lg);
+  background:var(--answered-bg);
+}
+.live-try b{display:block;margin-bottom:4px}
+.live-try p{font-size:.9rem;color:var(--muted);margin:0}
 
 /* ---------- website mock-up ---------- */
 .offer{display:grid;gap:30px;margin-top:38px}
@@ -1000,6 +1007,14 @@ input[type=range]::-moz-range-thumb{
       <div class="head-block">
         <h2 id="hear-h">Hear an AI receptionist in action</h2>
         <p class="lede">This is an example of how your customers could be greeted when they call your business.</p>
+      </div>
+
+      <div class="live-try">
+        <div>
+          <b>Want to try it yourself, right now?</b>
+          <p>Skip the recording &mdash; talk to the actual AI receptionist live, through your microphone.</p>
+        </div>
+        <a class="btn btn--primary" href="https://vapi.ai?demo=true&amp;shareKey=39e03f33-fd04-41a1-b71b-076d7ead27f2&amp;assistantId=cd32dc56-8497-4cfc-9e37-942f2ef0a1a9" target="_blank" rel="noopener">Talk to it live</a>
       </div>
 
       <div class="script-wrap">
