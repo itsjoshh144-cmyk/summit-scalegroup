@@ -2442,5 +2442,34 @@ footer.ft li{padding:4px 0}
   }
 })();
 </script>
+<script>
+  var vapiInstance = null;
+  const assistant = "0e94f39d-414e-46a5-bc2d-4c41859b0bd0";
+  const apiKey = "39e03f33-fd04-41a1-b71b-076d7ead27f2";
+  const buttonConfig = {
+    position: "bottom-right",
+    idle: { color: "#12243D", title: "Talk to our AI receptionist", subtitle: "Click to try it live" },
+    loading: { color: "#C9A227", title: "Connecting...", subtitle: "Please wait" },
+    active: { color: "#A4401F", title: "Listening...", subtitle: "Click to end call" }
+  };
+
+  (function (d, t) {
+    var g = document.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    g.src =
+      "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+    g.defer = true;
+    g.async = true;
+    s.parentNode.insertBefore(g, s);
+
+    g.onload = function () {
+      vapiInstance = window.vapiSDK.run({
+        apiKey: apiKey,
+        assistant: assistant,
+        config: buttonConfig,
+      });
+    };
+  })(document, "script");
+</script>
 </body>
 </html>
