@@ -555,6 +555,8 @@ input[type=range]::-moz-range-thumb{
 .sent h3{margin-bottom:8px}
 .sent p{font-size:.93rem;color:#4C5D74;max-width:36ch;margin-inline:auto}
 .sent a{color:#0A1A2F;font-weight:600}
+.sent-fallback{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+#copyConfirm{margin-top:10px;min-height:1em}
 .form.is-sent .f-live{display:none}
 
 /* ---------- footer ---------- */
@@ -718,6 +720,38 @@ input[type=range]::-moz-range-thumb{
   letter-spacing:-.025em;line-height:1.35;
 }
 .script-side .btn{margin-top:22px}
+
+/* ---------- scenario picker + lead card ---------- */
+.scenario-picker{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+.scen{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--r-pill);
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+  font-family:"Inter Tight",sans-serif;font-size:.88rem;font-weight:600;letter-spacing:-.01em;
+  cursor:pointer;transition:border-color .2s ease,background .2s ease,color .2s ease;
+}
+.scen .ico{color:var(--muted);width:17px;height:17px;flex:none}
+.scen:hover{border-color:var(--ink)}
+.scen[aria-pressed=true]{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-bg)}
+.scen[aria-pressed=true] .ico{color:var(--btn-fg)}
+.scen--warn{border-color:rgba(164,64,31,.35);color:var(--rust,#A4401F)}
+.scen--warn .ico{color:var(--rust,#A4401F)}
+.scen--warn[aria-pressed=true]{background:var(--rust,#A4401F);color:#fff;border-color:var(--rust,#A4401F)}
+.scen--warn[aria-pressed=true] .ico{color:#fff}
+.turns{min-height:64px}
+.lead-card{
+  margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:16px 18px 18px;box-shadow:var(--shadow-lift);
+}
+.lead-card-head{display:flex;align-items:center;gap:9px;margin:0 0 14px;font-family:"Inter Tight",sans-serif;font-size:.92rem}
+.lead-dot{width:9px;height:9px;border-radius:50%;background:var(--answered);flex:none;box-shadow:0 0 0 4px var(--answered-bg)}
+.lead-card--urgent .lead-dot{background:var(--rust,#A4401F);box-shadow:0 0 0 4px rgba(164,64,31,.15)}
+.lead-fields{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.lead-field{display:flex;flex-direction:column;gap:2px}
+.lead-field span{font-size:.74rem;color:var(--muted)}
+.lead-field b{font-size:.92rem;font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.35}
+.lead-card--urgent .lead-field.is-flag b{color:var(--rust,#A4401F)}
+.player-secondary{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.player-secondary .player-meta b{font-size:.88rem}
 
 /* ---------- founder ---------- */
 .founder{display:grid;gap:28px;margin-top:38px}
@@ -1005,55 +1039,71 @@ input[type=range]::-moz-range-thumb{
   <section class="section" id="hear" aria-labelledby="hear-h">
     <div class="wrap">
       <div class="head-block">
-        <h2 id="hear-h">Hear an AI receptionist in action</h2>
-        <p class="lede">This is an example of how your customers could be greeted when they call your business.</p>
+        <h2 id="hear-h">See how it handles a real call</h2>
+        <p class="lede">Pick a situation below and read exactly how the call would go &mdash; right through to what lands in your inbox afterwards. These are written examples, not a live chat, but every line is what a real call actually looks like once it's configured for a trade.</p>
       </div>
 
       <div class="script-wrap">
         <div>
-          <div class="player" id="player">
-            <button class="play" id="playBtn" type="button" aria-label="Play the example call">
-              <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+          <div class="scenario-picker" role="group" aria-label="Choose a call scenario">
+            <button type="button" class="scen" data-scenario="plumbing" aria-pressed="true">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-droplet"/></svg>Plumbing &amp; Heating
             </button>
-            <span class="player-meta">
-              <b>Example receptionist call</b>
-              <span id="playState">Boiler breakdown &middot; 30 seconds</span>
-            </span>
-            <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="time mono" id="playTime">0:00</span>
+            <button type="button" class="scen" data-scenario="locksmith" aria-pressed="false">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Locksmith
+            </button>
+            <button type="button" class="scen" data-scenario="drainage" aria-pressed="false">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Drainage
+            </button>
+            <button type="button" class="scen" data-scenario="roofing" aria-pressed="false">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Roofing
+            </button>
+            <button type="button" class="scen" data-scenario="garage" aria-pressed="false">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Garage
+            </button>
+            <button type="button" class="scen scen--warn" data-scenario="gas" aria-pressed="false">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Gas emergency
+            </button>
           </div>
 
-          <!-- ==== ADD YOUR RECORDING HERE ====
-               Upload demo-call.mp3 alongside this page, then swap the line below for:
-               <audio id="demoAudio" preload="none"><source src="demo-call.mp3" type="audio/mpeg"></audio>
-               The player wires itself up automatically once a source exists. -->
-          <audio id="demoAudio" preload="none"></audio>
-
-          <p class="player-note">Here is how that call goes, word for word.</p>
-
-          <div class="script" style="margin-top:18px">
+          <div class="script">
             <div class="script-head">
               <svg class="ico ico-sm" aria-hidden="true"><use href="#i-phone-in"/></svg>
-              <b>Example call</b>
+              <b id="scenTitle">Example call &middot; Plumbing &amp; Heating</b>
               <span class="stamp">Answered in 2 rings</span>
             </div>
-            <div class="turns">
-              <div class="turn turn--caller"><span>Customer</span><p>Hi, I'm looking for a gas engineer because my boiler has stopped working.</p></div>
-              <div class="turn turn--ai"><span>AI receptionist</span><p>I'm sorry to hear that. I can help with that. Could I take your postcode and contact number so I can arrange for an engineer to contact you?</p></div>
-              <div class="turn turn--caller"><span>Customer</span><p>My postcode is RM10 and my number is 07700 900431.</p></div>
-              <div class="turn turn--ai"><span>AI receptionist</span><p>Thank you. I've passed your details on and someone will contact you shortly.</p></div>
-            </div>
-            <div class="script-foot">
+            <div class="turns" id="scenTurns"></div>
+            <div class="script-foot" id="scenFoot">
               <svg class="ico ico-sm" aria-hidden="true"><use href="#i-sms"/></svg>
-              Job details texted to the engineer four seconds after the caller hung up.
+              Job details texted to the team the moment the caller hung up.
             </div>
+          </div>
+
+          <div class="lead-card" id="leadCard" aria-live="polite">
+            <p class="lead-card-head"><span class="lead-dot" aria-hidden="true"></span><b id="leadHead">Lead captured</b></p>
+            <div class="lead-fields" id="leadFields"></div>
+          </div>
+
+          <div class="player-secondary">
+            <div class="player" id="player">
+              <button class="play" id="playBtn" type="button" aria-label="Play the recorded example call">
+                <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              </button>
+              <span class="player-meta">
+                <b>Prefer to listen? A recorded example</b>
+                <span id="playState">Boiler breakdown &middot; 30 seconds</span>
+              </span>
+              <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="time mono" id="playTime">0:00</span>
+            </div>
+            <audio id="demoAudio" preload="none"></audio>
           </div>
         </div>
 
         <div class="script-side">
           <p class="pull">That call came in at twenty to eight on a Tuesday evening.</p>
-          <p>The old version of that call goes to voicemail, and the customer rings the next gas engineer on Google before he's finished listening to your greeting.</p>
-          <p>Every question in that conversation is one you chose. Your call-out rate, your availability, your way of speaking to people. It doesn't guess and it doesn't freelance.</p>
+          <p>The old version of that call goes to voicemail, and the customer rings the next tradesperson on Google before he's finished listening to your greeting.</p>
+          <p>Every question in that conversation is one you chose. Your call-out rate, your availability, your way of speaking to people. It doesn't guess and it doesn't freelance &mdash; and when something's genuinely urgent or outside what it's configured to handle, it knows to escalate rather than pretend.</p>
           <p>No keypad menus. No hold music. No being told you're twelfth in the queue.</p>
           <a class="btn btn--primary" href="#demo">Get my free demo</a>
         </div>
@@ -1566,7 +1616,7 @@ input[type=range]::-moz-range-thumb{
         <ul class="assure">
           <li><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>15 minutes, no obligation</li>
           <li><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Hear it handle a live call</li>
-          <li><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Josh runs the call himself</li>
+          <li><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>We run the call ourselves, personally</li>
         </ul>
       </div>
 
@@ -1617,7 +1667,13 @@ input[type=range]::-moz-range-thumb{
         <div class="sent" id="sent">
           <svg class="ico" aria-hidden="true"><use href="#i-check-circle"/></svg>
           <h3>Your email is ready to send</h3>
-          <p>We've opened a pre-filled message to our team. Send it and we'll be in touch within one working day. Nothing happened? Email <a href="mailto:hello@summitscalegroup.co.uk">hello@summitscalegroup.co.uk</a>.</p>
+          <p>We've opened a pre-filled message to our team in your mail app. Send it and we'll be in touch within one working day.</p>
+          <p class="form-fine">Nothing opened? That happens if your phone doesn't have a mail app set up. Use whichever's easiest instead:</p>
+          <div class="sent-fallback">
+            <button type="button" class="btn btn--ghost btn--sm" id="copyDetails">Copy my details</button>
+            <a class="btn btn--ghost btn--sm" id="sentMailto" href="mailto:hello@summitscalegroup.co.uk">Email hello@summitscalegroup.co.uk</a>
+          </div>
+          <p class="form-fine" id="copyConfirm" aria-live="polite"></p>
         </div>
       </div>
     </div>
@@ -1817,6 +1873,174 @@ input[type=range]::-moz-range-thumb{
     }
   }
 
+  /* ---------- call scenarios ---------- */
+  var SCENARIOS = {
+    plumbing: {
+      label: "Plumbing &amp; Heating",
+      urgent: false,
+      turns: [
+        ["ai","Hi, thanks for calling Whitmore Plumbing &amp; Heating, this is the AI receptionist. How can I help?"],
+        ["caller","Hiya, my heating's gone off and it's freezing in here."],
+        ["ai","Sorry to hear that — is it just the heating, or have you lost hot water as well?"],
+        ["caller","No hot water either, the whole thing's dead."],
+        ["ai","Okay, that sounds like the boiler itself rather than a thermostat issue. Is anyone in the property elderly, very young, or vulnerable to the cold?"],
+        ["caller","Yeah, my nan lives with us and she's 82."],
+        ["ai","Right, I'll flag that as urgent so the team can prioritise it. Can I take your name and postcode?"],
+        ["caller","Barbara Cole, and it's RM10 4EZ."],
+        ["ai","Thanks Barbara. And a number to reach you on?"],
+        ["caller","07700 900431."],
+        ["ai","Perfect — I've logged this as an urgent no-heat callout with a vulnerable resident in the property. Someone from the team will call you back within the hour."]
+      ],
+      fields: [
+        ["Name","Barbara Cole"], ["Phone","07700 900431"], ["Location","RM10 4EZ"],
+        ["Service","Emergency heating repair"], ["Problem","No heating or hot water — suspected boiler fault"],
+        ["Vulnerable occupant","Yes — flagged",true], ["Urgency","High",true], ["AI action","Flagged urgent — callback within the hour"]
+      ]
+    },
+    locksmith: {
+      label: "Locksmith",
+      urgent: false,
+      turns: [
+        ["ai","Hi, thanks for calling Barrow &amp; Co Locksmiths, this is the AI receptionist. How can I help?"],
+        ["caller","I've just locked myself out of my flat."],
+        ["ai","Okay — are you locked out right now and stood outside, or is this to arrange something for later?"],
+        ["caller","Right now, yeah, I've got nowhere to go."],
+        ["ai","Understood, I'll mark this as urgent. Is there anyone else with access to the property, or are you the only one who can get in?"],
+        ["caller","Just me, my partner's at work."],
+        ["ai","Alright. Can I get your name and the address you're locked out of?"],
+        ["caller","Dan Foster, 14 Chestnut Road, SE22."],
+        ["ai","And a number I can reach you on if the engineer needs to call?"],
+        ["caller","07700 900552."],
+        ["ai","Thanks Dan — I've flagged this as an urgent lockout. The on-call engineer will ring you directly within 15 minutes to confirm they're on the way."]
+      ],
+      fields: [
+        ["Name","Dan Foster"], ["Phone","07700 900552"], ["Location","14 Chestnut Road, SE22"],
+        ["Service","Emergency lockout"], ["Situation","Locked out, no other access"],
+        ["Urgency","Immediate",true], ["AI action","Flagged urgent — on-call engineer calling within 15 min"]
+      ]
+    },
+    drainage: {
+      label: "Drainage",
+      urgent: false,
+      turns: [
+        ["ai","Hi, thanks for calling Pipeline Drainage Solutions, this is the AI receptionist. How can I help?"],
+        ["caller","My toilet's completely blocked, it won't flush at all."],
+        ["ai","Okay — is that the only toilet in the property, and is it overflowing or just not flushing?"],
+        ["caller","It's the only one, and yeah it's close to overflowing."],
+        ["ai","That's worth treating as urgent then. Is any water actually coming out onto the floor at the moment?"],
+        ["caller","Not yet, but it's right at the top."],
+        ["ai","Understood. Can I take your name and address?"],
+        ["caller","Priya Shah, 9 Milton Court, Manchester, M14."],
+        ["ai","And a contact number?"],
+        ["caller","07700 900217."],
+        ["ai","Thanks Priya — I've logged this as a same-day blocked toilet with only bathroom access. The team will call shortly to confirm a time today."]
+      ],
+      fields: [
+        ["Name","Priya Shah"], ["Phone","07700 900217"], ["Location","9 Milton Court, Manchester, M14"],
+        ["Service","Blocked toilet / drainage"], ["Property","Only bathroom in property, near overflow",true],
+        ["Urgency","Same day"], ["AI action","Logged — callback to confirm same-day slot"]
+      ]
+    },
+    roofing: {
+      label: "Roofing",
+      urgent: false,
+      turns: [
+        ["ai","Hi, thanks for calling Apex Roofing, this is the AI receptionist. How can I help?"],
+        ["caller","I've got water coming through my ceiling, it's actually dripping into the room."],
+        ["ai","That needs urgent attention — is the water coming through in one spot, or is it spreading across the ceiling?"],
+        ["caller","Just one spot so far, near the window."],
+        ["ai","Okay. Have you been able to put anything underneath to catch the water?"],
+        ["caller","Yeah, got a bucket under it."],
+        ["ai","Good — that'll help until someone gets to you. Can I take your name and address?"],
+        ["caller","Mark Ellery, 27 Vine Street, Leeds, LS6."],
+        ["ai","And your number?"],
+        ["caller","07700 900389."],
+        ["ai","Thanks Mark — I've flagged this as an active leak so it goes to the top of today's list. Someone will call within the hour to arrange an emergency inspection."]
+      ],
+      fields: [
+        ["Name","Mark Ellery"], ["Phone","07700 900389"], ["Location","27 Vine Street, Leeds, LS6"],
+        ["Service","Emergency leak / roof inspection"], ["Problem","Active water ingress through ceiling",true],
+        ["Urgency","High — active leak",true], ["AI action","Flagged urgent — callback within the hour"]
+      ]
+    },
+    garage: {
+      label: "Garage",
+      urgent: false,
+      turns: [
+        ["ai","Hi, thanks for calling Whitfield Motors, this is the AI receptionist. How can I help?"],
+        ["caller","My car's making a horrible grinding noise when I brake, I'm a bit worried to drive it."],
+        ["ai","That's worth getting looked at quickly — is it happening every time you brake, or only sometimes?"],
+        ["caller","Every time now, it started yesterday."],
+        ["ai","Okay, that does sound like it could be the brake pads or discs. Is the car driveable to you right now, or would you rather it was collected?"],
+        ["caller","I think I can get it to you carefully."],
+        ["ai","That's fine — I'd still treat it as a priority booking rather than routine. Can I take your name and the car's make and model?"],
+        ["caller","Sarah Byrne, it's a 2018 Ford Fiesta."],
+        ["ai","And a number to reach you on?"],
+        ["caller","07700 900644."],
+        ["ai","Thanks Sarah — I've logged this as a priority brake check. The team will call you back today to get you booked in as soon as there's a slot free."]
+      ],
+      fields: [
+        ["Name","Sarah Byrne"], ["Phone","07700 900644"], ["Vehicle","2018 Ford Fiesta"],
+        ["Service","Priority brake inspection"], ["Problem","Grinding on braking, started yesterday, worsening",true],
+        ["Urgency","High — safety concern, car still driveable",true], ["AI action","Logged — callback today for priority slot"]
+      ]
+    },
+    gas: {
+      label: "Gas emergency",
+      urgent: true,
+      turns: [
+        ["ai","Hi, thanks for calling Whitmore Plumbing &amp; Heating, this is the AI receptionist. How can I help?"],
+        ["caller","I can smell gas in my kitchen, quite strongly."],
+        ["ai","Okay, I need you to treat this as a gas emergency. Please leave the property, don't turn any electrical switches on or off, and call the National Gas Emergency Service on 0800 111 999 immediately. I'll flag this call to the team right away as a gas safety incident."],
+        ["caller","Okay, I'm heading outside now."],
+        ["ai","Good. Can I quickly get your name and address so the team has it on file in case they need to follow up?"],
+        ["caller","James Hart, 8 Larch Avenue, DA1."],
+        ["ai","Thank you James — stay safe, and call 0800 111 999 now if you haven't already."]
+      ],
+      fields: [
+        ["Name","James Hart"], ["Location","8 Larch Avenue, DA1"],
+        ["Situation","Reported gas smell — SAFETY ESCALATION",true],
+        ["AI action","Told caller to evacuate and call the National Gas Emergency Service (0800 111 999) immediately. Flagged to the team as a safety incident, not a standard job.",true]
+      ]
+    }
+  };
+
+  var scenBtns = Array.prototype.slice.call(document.querySelectorAll(".scen"));
+  var scenTurnsEl = document.getElementById("scenTurns");
+  var scenTitleEl = document.getElementById("scenTitle");
+  var scenFootEl = document.getElementById("scenFoot");
+  var leadCardEl = document.getElementById("leadCard");
+  var leadHeadEl = document.getElementById("leadHead");
+  var leadFieldsEl = document.getElementById("leadFields");
+
+  function renderScenario(key){
+    var s = SCENARIOS[key];
+    if (!s) return;
+    scenTitleEl.innerHTML = "Example call · " + s.label;
+    scenTurnsEl.innerHTML = s.turns.map(function(t){
+      var who = t[0] === "ai" ? "ai" : "caller";
+      var label = t[0] === "ai" ? "AI receptionist" : "Customer";
+      return '<div class="turn turn--' + who + '"><span>' + label + '</span><p>' + t[1] + '</p></div>';
+    }).join("");
+    scenFootEl.innerHTML = '<svg class="ico ico-sm" aria-hidden="true"><use href="#i-sms"/></svg>' +
+      (s.urgent ? "Flagged to the team immediately as a safety incident." : "Job details texted to the team the moment the caller hung up.");
+    leadCardEl.classList.toggle("lead-card--urgent", !!s.urgent);
+    leadHeadEl.textContent = s.urgent ? "Safety escalation logged" : "Lead captured";
+    leadFieldsEl.innerHTML = s.fields.map(function(f){
+      return '<div class="lead-field' + (f[2] ? " is-flag" : "") + '"><span>' + f[0] + '</span><b>' + f[1] + '</b></div>';
+    }).join("");
+  }
+
+  scenBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      scenBtns.forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      renderScenario(b.dataset.scenario);
+      if (!reduce) scenTurnsEl.closest(".script").scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+  });
+
+  renderScenario("plumbing");
+
   /* ---------- demo form ---------- */
   var form = document.getElementById("form");
   var btn = document.getElementById("submitBtn");
@@ -1861,6 +2085,26 @@ input[type=range]::-moz-range-thumb{
     var href = "mailto:hello@summitscalegroup.co.uk"
       + "?subject=" + encodeURIComponent("Free demo request - " + (v("fBiz") || v("fName")))
       + "&body=" + encodeURIComponent(body);
+
+    var sentMailto = document.getElementById("sentMailto");
+    if (sentMailto) sentMailto.href = href;
+
+    var copyBtn = document.getElementById("copyDetails");
+    var copyConfirm = document.getElementById("copyConfirm");
+    if (copyBtn){
+      copyBtn.onclick = function(){
+        var text = "Name: " + v("fName") + "\nBusiness: " + (v("fBiz") || "-") + "\nMobile: " + v("fPhone") + "\nEmail: " + v("fEmail") + "\nInterested in: " + v("fTrade");
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(function(){
+            copyConfirm.textContent = "Copied — paste it into a text or email to hello@summitscalegroup.co.uk.";
+          }, function(){
+            copyConfirm.textContent = "Couldn't copy automatically — email hello@summitscalegroup.co.uk with your details.";
+          });
+        } else {
+          copyConfirm.textContent = "Couldn't copy automatically — email hello@summitscalegroup.co.uk with your details.";
+        }
+      };
+    }
 
     form.classList.add("is-sent");
     sent.classList.add("show");
