@@ -1390,6 +1390,8 @@ function renderLead(a) {
 
 function onMessage(msg) {
   if (!msg) return;
+  // The SDK's own speech-end only fires ~1s after her audio stops; this arrives the moment she's cut off.
+  if (msg.type === "user-interrupted" && state === "live") statusEl.textContent = "Listening…";
   if (msg.type === "transcript" && msg.transcriptType === "final" && msg.transcript) addLine(msg.role, msg.transcript);
   const lead = extractEnquiry(msg);
   if (lead) renderLead(lead);
