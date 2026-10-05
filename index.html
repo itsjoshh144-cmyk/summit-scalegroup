@@ -90,6 +90,7 @@ p{margin:0}
 a{color:inherit}
 img,svg{display:block;max-width:100%}
 button{font:inherit;cursor:pointer}
+[hidden]{display:none !important}
 .mono{font-family:"IBM Plex Mono",monospace}
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:20px}
 @media (min-width:860px){.wrap{padding-inline:32px}}
@@ -351,6 +352,78 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
 .foot-links a:hover{color:var(--ink)}
 .foot-legal{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
 
+/* ---------- try the AI receptionist (live call) ---------- */
+.try{background:var(--bg-raise);border-block:1px solid var(--line)}
+.try-note{display:flex;gap:10px;align-items:flex-start;max-width:680px;margin:-20px 0 32px;padding:13px 15px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);font-size:.86rem;color:var(--body);line-height:1.5}
+.try-note svg{width:18px;height:18px;color:var(--gold-light);flex:none;margin-top:2px}
+.try-note b{color:var(--ink)}
+.try-grid{display:grid;gap:20px}
+@media (min-width:980px){.try-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+.phone{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.phone-head,.ls-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.phone-head strong,.ls-head strong{font-family:"Inter Tight",sans-serif;font-size:.9rem;color:var(--ink);display:block}
+.phone-head .tagline{display:block;font-size:.74rem;color:var(--muted)}
+.demo-badge{margin-left:auto;flex:none;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-light);background:var(--good-bg);border:1px solid rgba(227,199,122,.25);padding:4px 9px;border-radius:var(--r-pill)}
+.phone-body{padding:30px 20px 22px;text-align:center}
+.orb{position:relative;width:108px;height:108px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;background:var(--good-bg);border:1px solid rgba(227,199,122,.3);color:var(--gold-light)}
+.orb svg{width:36px;height:36px}
+.orb::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid var(--gold-light);opacity:0;transform:scale(var(--lvl,1));transition:transform .12s ease,opacity .25s ease}
+.phone[data-state="live"] .orb::before{opacity:.55}
+.phone[data-state="connecting"] .orb{animation:pulse 1.2s ease-in-out infinite}
+.phone[data-state="ended"] .orb{opacity:.6}
+.call-label{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.call-status{margin-top:6px;font-family:"Inter Tight",sans-serif;font-size:1.15rem;font-weight:600;color:var(--ink);min-height:1.5em}
+.call-timer{margin-top:2px;font-size:.84rem;color:var(--muted);min-height:1.3em}
+.call-actions{margin:20px auto 0;display:flex;flex-direction:column;gap:10px;max-width:320px}
+.call-sub{display:flex;gap:10px}
+.call-sub .btn{flex:1}
+.btn--end{background:var(--rust);color:#1A0E08}
+.btn--end:hover{background:#EC8A66}
+.call-error{margin-top:14px;font-size:.86rem;color:var(--rust);line-height:1.5}
+.call-error:empty{display:none}
+.call-fine{margin:16px auto 0;font-size:.78rem;color:var(--muted);line-height:1.5;max-width:42ch}
+.try-chips{border-top:1px solid var(--line);padding:16px 20px 18px}
+.try-chips p{font-size:.76rem;color:var(--muted);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 12px;border-radius:var(--r-pill);background:var(--bg-raise);border:1px solid var(--line);font-size:.82rem;color:var(--body)}
+.live-transcript{display:none;border-top:1px solid var(--line);padding:16px 20px 18px;max-height:260px;overflow-y:auto}
+.phone.has-transcript .live-transcript{display:block}
+.lt-line{font-size:.88rem;line-height:1.5;margin-bottom:8px;color:var(--body)}
+.lt-line b{color:var(--gold-light);font-weight:600;margin-right:6px}
+.lt-line.is-user b{color:var(--ink)}
+.lead-sheet{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.ls-head span{margin-left:auto;font-size:.76rem;color:var(--muted)}
+.ls-empty{padding:44px 24px;text-align:center;color:var(--muted);font-size:.9rem;line-height:1.6}
+.ls-empty svg{width:34px;height:34px;margin:0 auto 14px;color:var(--line-strong)}
+.ls-body{display:none;padding:20px}
+.lead-sheet.is-filled .ls-empty{display:none}
+.lead-sheet.is-filled .ls-body{display:block}
+.ls-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.ls-top .new{font-family:"Inter Tight",sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);letter-spacing:.03em;margin-right:4px}
+.urg,.ls-flag{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:var(--r-pill)}
+.urg--emergency{background:var(--rust);color:#1A0E08}
+.urg--urgent{background:var(--rust-bg);color:var(--rust)}
+.urg--routine{background:var(--good-bg);color:var(--gold-light)}
+.ls-flag{display:none;background:var(--rust-bg);color:var(--rust)}
+.lead-sheet.is-safety{border-color:rgba(226,113,74,.5)}
+.lead-sheet.is-safety .ls-flag{display:inline-block}
+.ls-time{margin-left:auto;font-size:.76rem;color:var(--muted)}
+.ls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px 18px}
+.ls-f span{display:block;font-size:.72rem;color:var(--muted);margin-bottom:3px}
+.ls-f b{display:block;font-size:.94rem;color:var(--ink);font-weight:600;line-height:1.4;overflow-wrap:anywhere}
+.ls-f.wide{grid-column:1/-1}
+.ls-f.is-missing b{color:var(--muted);font-weight:500;font-style:italic}
+.ls-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);line-height:1.5}
+.after-call{display:none;margin-top:20px;padding:24px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--gold)}
+.after-call.show{display:block}
+.after-call p{font-family:"Inter Tight",sans-serif;font-size:1.15rem;font-weight:600;color:var(--ink);line-height:1.4;letter-spacing:-.01em}
+.after-call p + p{margin-top:8px;font-family:"Inter",sans-serif;font-size:.95rem;font-weight:400;color:var(--body)}
+.after-call .btn{margin-top:18px}
+.talk-fab{position:fixed;right:16px;bottom:16px;z-index:30;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:var(--r-pill);border:none;background:var(--gold);color:var(--on-gold);font-family:"Inter Tight",sans-serif;font-weight:600;font-size:.92rem;box-shadow:0 12px 30px -10px rgba(0,0,0,.75);transition:opacity .2s ease,transform .2s ease,background .2s ease}
+.talk-fab svg{width:16px;height:16px}
+.talk-fab.is-live{background:var(--rust);color:#1A0E08}
+.talk-fab.is-hidden{opacity:0;transform:translateY(12px);pointer-events:none}
+
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
 .reveal.in-view{opacity:1;transform:none}
@@ -371,7 +444,7 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="#demo">Demo</a></li>
+      <li><a href="#try">Demo</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
@@ -392,7 +465,7 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
   <ul>
     <li><a href="#top">Home</a></li>
     <li><a href="#how">How It Works</a></li>
-    <li><a href="#demo">Demo</a></li>
+    <li><a href="#try">Demo</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
@@ -409,7 +482,7 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
         <h1 class="h1">Stop losing jobs because you missed the call.</h1>
         <p class="hero-sub">Your customers don't wait around. Summit's AI receptionist answers calls, qualifies the enquiry and captures the customer's details &mdash; even when you're too busy to pick up.</p>
         <div class="hero-cta">
-          <a class="btn btn--primary" href="#demo">See It In Action</a>
+          <a class="btn btn--primary" href="#try">See It In Action</a>
           <a class="btn btn--ghost" href="#get-demo">Get Your Free Demo</a>
         </div>
         <p class="hero-note">No hardware. Keep your existing number. Hear it before a customer does.</p>
@@ -439,6 +512,83 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
           <div class="booked">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v13H4zM4 7l2-4h12l2 4M9 12l2 2 4-4"/></svg>
             <span><em>Callback confirmed</em><strong>Today &middot; before 5pm</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRY THE AI RECEPTIONIST (live call) ============ -->
+  <section class="try" id="try">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Live demo</span>
+        <h2>Try the AI Receptionist</h2>
+        <p class="lede">Call the demo and have a real conversation with it.</p>
+      </div>
+      <p class="try-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <span><b>This is a demonstration.</b> Brighton Boiler &amp; Heating is a made-up heating and plumbing company in Brighton &amp; Hove, created for this demo. It isn't a real business or a Summit Scale customer.</span>
+      </p>
+
+      <div class="try-grid">
+        <div>
+          <div class="phone" id="phone" data-state="idle">
+            <div class="phone-head">
+              <span><strong>Brighton Boiler &amp; Heating</strong><span class="tagline">Boilers, heating &amp; plumbing &middot; Brighton &amp; Hove</span></span>
+              <span class="demo-badge">Demo line</span>
+            </div>
+            <div class="phone-body">
+              <div class="orb" id="orb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5a2 2 0 0 1 2-2h2l2 5-2 1a12 12 0 0 0 6 6l1-2 5 2v2a2 2 0 0 1-2 2A16 16 0 0 1 3 5z"/></svg></div>
+              <p class="call-label">Call the AI receptionist</p>
+              <p class="call-status" id="callStatus" aria-live="polite">Ready when you are</p>
+              <p class="call-timer mono" id="callTimer"></p>
+              <div class="call-actions">
+                <button type="button" class="btn btn--primary btn--wide" id="startCallBtn">Start Demo Call</button>
+                <div class="call-sub" id="inCallActions" hidden>
+                  <button type="button" class="btn btn--ghost" id="muteBtn" aria-pressed="false">Mute</button>
+                  <button type="button" class="btn btn--end" id="endCallBtn">End call</button>
+                </div>
+                <a class="btn btn--ghost btn--wide" id="phoneCallLink" href="#" hidden>Call from your phone</a>
+              </div>
+              <p class="call-error" id="callError" role="alert"></p>
+              <p class="call-fine">Uses your microphone, so allow access when your browser asks. Calls last up to 6 minutes. Please use made-up details: calls are processed by our voice provider and transcripts may be stored.</p>
+            </div>
+            <div class="try-chips">
+              <p>Things to try saying</p>
+              <div class="chips">
+                <span class="chip">&ldquo;My boiler&rsquo;s packed up and we&rsquo;ve got no heating&rdquo;</span>
+                <span class="chip">&ldquo;I can smell gas in the kitchen&rdquo;</span>
+                <span class="chip">&ldquo;Can someone come out on Saturday?&rdquo;</span>
+                <span class="chip">&ldquo;How much is a boiler service?&rdquo;</span>
+              </div>
+            </div>
+            <div class="live-transcript" id="liveTranscript" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="lead-sheet" id="leadSheet">
+            <div class="ls-head"><strong>Lead summary</strong><span>What the business receives</span></div>
+            <div class="ls-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+              <p id="lsEmptyText">Start the call and the receptionist fills this in as you talk: name, number, postcode, the problem and how urgent it is.</p>
+            </div>
+            <div class="ls-body">
+              <div class="ls-top">
+                <span class="new">NEW LEAD</span>
+                <span class="urg" id="lsUrgency"></span>
+                <span class="ls-flag">Safety escalation</span>
+                <span class="ls-time" id="lsTime"></span>
+              </div>
+              <div class="ls-grid" id="lsGrid"></div>
+              <p class="ls-foot">Demo data from your call. In a configured setup, a summary like this can be sent to the business by text or email.</p>
+            </div>
+          </div>
+          <div class="after-call" id="afterCall">
+            <p>That&rsquo;s what your customers could experience when you&rsquo;re busy, driving, on a job or unable to answer.</p>
+            <p>Every enquiry can be captured instead of going to voicemail.</p>
+            <a class="btn btn--primary" href="#get-demo">Get Your Business Demo</a>
           </div>
         </div>
       </div>
@@ -510,9 +660,9 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
   <section id="demo">
     <div class="wrap">
       <div class="head">
-        <span class="eyebrow">See it in action</span>
+        <span class="eyebrow">More examples</span>
         <h2>Pick a situation, see exactly how the call goes.</h2>
-        <p class="lede">These are written demonstrations with fictional businesses and customers &mdash; not real customer conversations, and not a live chat. They show how a call can go once it's set up for your business. Want to hear the real thing? The live AI is one click away, on the right.</p>
+        <p class="lede">These are written demonstrations with fictional businesses and customers &mdash; not real customer conversations, and not a live chat. They show how a call can go once it's set up for your business. Want to talk to it yourself? Try the <a href="#try" style="color:var(--gold-light)">live demo call</a>.</p>
       </div>
 
       <div class="demo-shell">
@@ -544,7 +694,7 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
         <div class="demo-side">
           <div class="side-card">
             <p><b style="color:var(--ink)">Want to hear a real voice, not just read one?</b></p>
-            <p>Click <i>"Talk to our AI receptionist"</i> in the bottom-right corner of this page &mdash; that's a live call with the actual AI, not a recording.</p>
+            <p>Have a real conversation with the AI receptionist in the <a href="#try" style="color:var(--gold-light)">live demo</a> &mdash; it's a live call, not a recording.</p>
             <p class="side-note">Every question it asks is one you choose during setup. It doesn't guess, and it doesn't freelance &mdash; when something's genuinely urgent or outside what it's configured for, it knows to escalate rather than pretend.</p>
             <a class="btn btn--primary btn--wide" href="#get-demo">Get my business set up</a>
           </div>
@@ -1100,34 +1250,229 @@ h1.h1{font-size:2.35rem;letter-spacing:-.03em}
 })();
 </script>
 
-<script>
-  var vapiInstance = null;
-  const assistant = "0e94f39d-414e-46a5-bc2d-4c41859b0bd0";
-  const apiKey = "39e03f33-fd04-41a1-b71b-076d7ead27f2";
-  const buttonConfig = {
-    position: "bottom-right",
-    idle: { color: "#121B2E", title: "Talk to our AI receptionist", subtitle: "Click to try it live" },
-    loading: { color: "#C9A227", title: "Connecting...", subtitle: "Please wait" },
-    active: { color: "#E2714A", title: "Listening...", subtitle: "Click to end call" }
-  };
+<button type="button" class="talk-fab is-hidden" id="talkFab">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+  <span id="talkFabLabel">Talk to AI</span>
+</button>
 
-  (function (d, t) {
-    var g = document.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    g.src =
-      "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-    g.defer = true;
-    g.async = true;
-    s.parentNode.insertBefore(g, s);
+<script type="module">
+const VAPI_PUBLIC_KEY = "39e03f33-fd04-41a1-b71b-076d7ead27f2";
+// A saved Vapi assistant ID; when set it's used instead of the config file.
+const DEMO_ASSISTANT_ID = "";
+// The phone number attached to the demo assistant in Vapi, e.g. "+44 1273 000000"; when set, a "Call from your phone" button appears.
+const DEMO_PHONE_NUMBER = "";
+const ASSISTANT_CONFIG_URL = "demo/brighton-boiler-assistant.json";
+const VAPI_SDK_URL = "https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.7.1/+esm";
 
-    g.onload = function () {
-      vapiInstance = window.vapiSDK.run({
-        apiKey: apiKey,
-        assistant: assistant,
-        config: buttonConfig,
-      });
-    };
-  })(document, "script");
+const $ = (id) => document.getElementById(id);
+const phone = $("phone"), orb = $("orb"), statusEl = $("callStatus"), timerEl = $("callTimer");
+const startBtn = $("startCallBtn"), inCall = $("inCallActions"), muteBtn = $("muteBtn"), endBtn = $("endCallBtn");
+const errorEl = $("callError"), transcriptEl = $("liveTranscript");
+const sheet = $("leadSheet"), lsGrid = $("lsGrid"), lsUrgency = $("lsUrgency"), lsTime = $("lsTime"), lsEmptyText = $("lsEmptyText");
+const afterCall = $("afterCall"), fab = $("talkFab"), fabLabel = $("talkFabLabel");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const EMPTY_TEXT = lsEmptyText.textContent;
+const URGENCY = { emergency: "Emergency", urgent: "Urgent", routine: "Routine" };
+
+let vapi = null, ready = null, state = "idle", timer = null, startedAt = 0, leadCaptured = false, tryVisible = false;
+
+if (DEMO_PHONE_NUMBER) {
+  const link = $("phoneCallLink");
+  link.href = "tel:" + DEMO_PHONE_NUMBER.replace(/[^+\d]/g, "");
+  link.textContent = "Call from your phone: " + DEMO_PHONE_NUMBER;
+  link.hidden = false;
+}
+
+function setState(next, status) {
+  state = next;
+  phone.dataset.state = next;
+  statusEl.textContent = status;
+  startBtn.hidden = next === "live";
+  startBtn.disabled = next === "connecting";
+  startBtn.textContent = next === "connecting" ? "Connecting…" : next === "ended" ? "Call again" : "Start Demo Call";
+  inCall.hidden = next !== "live";
+  if (next !== "live") { muteBtn.setAttribute("aria-pressed", "false"); muteBtn.textContent = "Mute"; }
+  syncFab();
+}
+
+function syncFab() {
+  const busy = state === "live" || state === "connecting";
+  fab.classList.toggle("is-live", busy);
+  fabLabel.textContent = busy ? "End call" : "Talk to AI";
+  fab.classList.toggle("is-hidden", tryVisible);
+}
+
+function tick() {
+  const s = Math.floor((Date.now() - startedAt) / 1000);
+  timerEl.textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+}
+function startTimer() { startedAt = Date.now(); tick(); timer = setInterval(tick, 1000); }
+function stopTimer() { clearInterval(timer); timer = null; }
+
+function resetCall() {
+  errorEl.textContent = "";
+  timerEl.textContent = "";
+  transcriptEl.replaceChildren();
+  phone.classList.remove("has-transcript");
+  sheet.classList.remove("is-filled", "is-safety");
+  lsEmptyText.textContent = EMPTY_TEXT;
+  afterCall.classList.remove("show");
+  leadCaptured = false;
+}
+
+function looksLikeMicDenied(err) {
+  let text = "";
+  try { text = JSON.stringify(err) || ""; } catch { /* circular */ }
+  return /NotAllowed|permission|denied/i.test(text + " " + (err && err.message));
+}
+
+function fail(err) {
+  if (err) console.error("Demo call failed", err);
+  stopTimer();
+  setState("idle", "Couldn’t connect");
+  errorEl.textContent = looksLikeMicDenied(err)
+    ? "Your microphone is blocked for this site. Allow microphone access in your browser settings, then try again."
+    : "The demo line couldn’t connect. Check your connection and try again.";
+}
+
+function addLine(role, text) {
+  const line = document.createElement("p");
+  line.className = "lt-line" + (role === "user" ? " is-user" : "");
+  const who = document.createElement("b");
+  who.textContent = role === "user" ? "You" : "Sophie";
+  line.append(who, document.createTextNode(text));
+  transcriptEl.append(line);
+  phone.classList.add("has-transcript");
+  transcriptEl.scrollTop = transcriptEl.scrollHeight;
+}
+
+function extractEnquiry(msg) {
+  let calls = [];
+  if (msg.type === "tool-calls") calls = msg.toolCallList || msg.toolCalls || [];
+  else if (msg.type === "function-call" && msg.functionCall) calls = [{ function: { name: msg.functionCall.name, arguments: msg.functionCall.parameters } }];
+  for (const call of calls) {
+    const fn = call.function || call;
+    if (!fn || fn.name !== "save_enquiry") continue;
+    let args = fn.arguments ?? fn.parameters;
+    if (typeof args === "string") { try { args = JSON.parse(args); } catch { args = null; } }
+    if (args && typeof args === "object") return args;
+  }
+  return null;
+}
+
+function renderLead(a) {
+  leadCaptured = true;
+  const urgency = URGENCY[a.urgency] ? a.urgency : "routine";
+  lsUrgency.className = "urg urg--" + urgency;
+  lsUrgency.textContent = URGENCY[urgency];
+  sheet.classList.toggle("is-safety", a.safety_escalation === true);
+  lsTime.textContent = "Captured " + new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  const rows = [
+    ["Customer", a.customer_name], ["Phone", a.phone], ["Postcode", a.postcode],
+    a.address ? ["Address", a.address] : null,
+    ["Issue", a.issue], ["Preferred time", a.preferred_time],
+    a.vulnerable_occupant === true ? ["Vulnerable occupant", "Yes"] : null,
+    ["Notes", a.notes, true]
+  ].filter(Boolean);
+  lsGrid.replaceChildren(...rows.map(([label, value, wide]) => {
+    const v = String(value ?? "").trim();
+    const field = document.createElement("div");
+    field.className = "ls-f" + (wide ? " wide" : "") + (v ? "" : " is-missing");
+    const l = document.createElement("span");
+    l.textContent = label;
+    const b = document.createElement("b");
+    b.textContent = v || "Not given";
+    field.append(l, b);
+    return field;
+  }));
+  sheet.classList.add("is-filled");
+}
+
+function onMessage(msg) {
+  if (!msg) return;
+  if (msg.type === "transcript" && msg.transcriptType === "final" && msg.transcript) addLine(msg.role, msg.transcript);
+  const lead = extractEnquiry(msg);
+  if (lead) renderLead(lead);
+}
+
+function onCallEnd() {
+  stopTimer();
+  orb.style.removeProperty("--lvl");
+  if (state !== "live") { if (state === "connecting") fail(); return; }
+  setState("ended", "Call ended");
+  if (!leadCaptured) lsEmptyText.textContent = "The call ended before the receptionist took any details. Give it another go: try telling her what’s wrong with your boiler.";
+  afterCall.classList.add("show");
+  sheet.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
+}
+
+function wire(v) {
+  v.on("call-start", () => { setState("live", "Listening…"); startTimer(); });
+  v.on("speech-start", () => { if (state === "live") statusEl.textContent = "Sophie is speaking…"; });
+  v.on("speech-end", () => { if (state === "live") statusEl.textContent = "Listening…"; });
+  v.on("volume-level", (level) => orb.style.setProperty("--lvl", (1 + Math.min(level || 0, 1) * 0.35).toFixed(3)));
+  v.on("message", onMessage);
+  v.on("call-end", onCallEnd);
+  v.on("call-start-failed", (e) => { if (state === "connecting") fail(e); });
+  v.on("error", (e) => { if (state === "connecting") fail(e); else console.error("Demo call error", e); });
+}
+
+function prepare() {
+  if (!ready) {
+    const assistant = DEMO_ASSISTANT_ID
+      ? Promise.resolve(DEMO_ASSISTANT_ID)
+      : fetch(ASSISTANT_CONFIG_URL).then((r) => { if (!r.ok) throw new Error("Assistant config " + r.status); return r.json(); });
+    ready = Promise.all([import(VAPI_SDK_URL), assistant]).then(([mod, config]) => {
+      const Vapi = typeof mod.default === "function" ? mod.default : mod.default.default;
+      vapi = new Vapi(VAPI_PUBLIC_KEY);
+      wire(vapi);
+      return config;
+    });
+    ready.catch(() => { ready = null; });
+  }
+  return ready;
+}
+
+async function startCall() {
+  if (state === "connecting" || state === "live") return;
+  resetCall();
+  setState("connecting", "Connecting…");
+  try {
+    const config = await prepare();
+    await vapi.start(config);
+  } catch (err) {
+    fail(err);
+  }
+}
+
+startBtn.addEventListener("click", startCall);
+endBtn.addEventListener("click", () => vapi && vapi.stop());
+muteBtn.addEventListener("click", () => {
+  if (!vapi || state !== "live") return;
+  try {
+    const muted = !vapi.isMuted();
+    vapi.setMuted(muted);
+    muteBtn.setAttribute("aria-pressed", String(muted));
+    muteBtn.textContent = muted ? "Unmute" : "Mute";
+  } catch (err) {
+    console.error("Mute failed", err);
+  }
+});
+fab.addEventListener("click", () => {
+  if (state === "live" || state === "connecting") { if (vapi) vapi.stop(); return; }
+  $("try").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  startCall();
+});
+
+if ("IntersectionObserver" in window) {
+  const inView = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? inView.add(e.target) : inView.delete(e.target)));
+    tryVisible = inView.size > 0;
+    syncFab();
+  }, { threshold: 0.15 });
+  io.observe($("try"));
+  io.observe($("get-demo"));
+}
 </script>
 </body>
 </html>
