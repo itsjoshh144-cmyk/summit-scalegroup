@@ -107,7 +107,7 @@
     "style": 0.15,
     "useSpeakerBoost": true
   },
-  "backgroundSound": "office",
+  "backgroundSound": "off",
   "backgroundSpeechDenoisingPlan": {
     "smartDenoisingPlan": {
       "enabled": true
@@ -122,61 +122,9 @@
     }
   },
   "stopSpeakingPlan": {
-    "numWords": 0,
+    "numWords": 2,
     "voiceSeconds": 0.2,
-    "backoffSeconds": 1,
-    "acknowledgementPhrases": [
-      "i understand",
-      "i see",
-      "i got it",
-      "i hear you",
-      "im listening",
-      "im with you",
-      "right",
-      "okay",
-      "ok",
-      "sure",
-      "alright",
-      "got it",
-      "understood",
-      "uh-huh",
-      "mm-hmm",
-      "mhmm",
-      "gotcha",
-      "ah"
-    ],
-    "interruptionPhrases": [
-      "stop",
-      "shut",
-      "up",
-      "enough",
-      "quiet",
-      "silence",
-      "but",
-      "dont",
-      "not",
-      "no",
-      "hold",
-      "wait",
-      "cut",
-      "pause",
-      "nope",
-      "nah",
-      "nevermind",
-      "never",
-      "bad",
-      "actually",
-      "yeah",
-      "yes",
-      "sorry",
-      "hang",
-      "hang on",
-      "hold on",
-      "excuse me",
-      "one sec",
-      "one second",
-      "just a sec"
-    ]
+    "backoffSeconds": 1
   },
   "maxDurationSeconds": 360,
   "artifactPlan": {

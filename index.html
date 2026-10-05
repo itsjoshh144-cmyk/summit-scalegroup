@@ -1263,6 +1263,8 @@ const DEMO_ASSISTANT_ID = "";
 const DEMO_PHONE_NUMBER = "";
 const ASSISTANT_CONFIG_URL = "demo/brighton-boiler-assistant.json";
 const VAPI_SDK_URL = "https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.7.1/+esm";
+// Opening the page with ?interrupt=fast trials 1-word barge-in for this browser only; everyone else keeps the default.
+const FAST_INTERRUPT = new URLSearchParams(location.search).get("interrupt") === "fast";
 
 const $ = (id) => document.getElementById(id);
 const phone = $("phone"), orb = $("orb"), statusEl = $("callStatus"), timerEl = $("callTimer");
@@ -1440,7 +1442,10 @@ async function startCall() {
   setState("connecting", "Connecting…");
   try {
     const config = await prepare();
-    await vapi.start(config);
+    const overrides = FAST_INTERRUPT && typeof config === "object"
+      ? { stopSpeakingPlan: { ...config.stopSpeakingPlan, numWords: 1 } }
+      : undefined;
+    await vapi.start(config, overrides);
   } catch (err) {
     fail(err);
   }
