@@ -1276,7 +1276,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const EMPTY_TEXT = lsEmptyText.textContent;
 const URGENCY = { emergency: "Emergency", urgent: "Urgent", routine: "Routine" };
 
-let vapi = null, ready = null, state = "idle", timer = null, startedAt = 0, leadCaptured = false, tryVisible = false;
+let vapi = null, ready = null, state = "idle", timer = null, startedAt = 0, leadCaptured = false, tryVisible = false, warmMic = null;
 
 if (DEMO_PHONE_NUMBER) {
   const link = $("phoneCallLink");
@@ -1325,11 +1325,17 @@ function resetCall() {
 function looksLikeMicDenied(err) {
   let text = "";
   try { text = JSON.stringify(err) || ""; } catch { /* circular */ }
-  return /NotAllowed|permission|denied/i.test(text + " " + (err && err.message));
+  return /NotAllowed|permission|denied/i.test(text + " " + (err && err.name) + " " + (err && err.message));
+}
+
+function releaseWarmMic() {
+  if (warmMic) warmMic.getTracks().forEach((t) => t.stop());
+  warmMic = null;
 }
 
 function fail(err) {
   if (err) console.error("Demo call failed", err);
+  releaseWarmMic();
   stopTimer();
   setState("idle", "Couldn’t connect");
   errorEl.textContent = looksLikeMicDenied(err)
@@ -1342,7 +1348,7 @@ function addLine(role, text) {
   line.className = "lt-line" + (role === "user" ? " is-user" : "");
   const who = document.createElement("b");
   who.textContent = role === "user" ? "You" : "Sophie";
-  line.append(who, document.createTextNode(text));
+  line.append(who, document.createTextNode(text.replace(/<break[^>]*>/gi, "").trim()));
   transcriptEl.append(line);
   phone.classList.add("has-transcript");
   transcriptEl.scrollTop = transcriptEl.scrollHeight;
@@ -1400,6 +1406,7 @@ function onMessage(msg) {
 }
 
 function onCallEnd() {
+  releaseWarmMic();
   stopTimer();
   orb.style.removeProperty("--lvl");
   if (state !== "live") { if (state === "connecting") fail(); return; }
@@ -1410,7 +1417,7 @@ function onCallEnd() {
 }
 
 function wire(v) {
-  v.on("call-start", () => { setState("live", "Listening…"); startTimer(); });
+  v.on("call-start", () => { releaseWarmMic(); setState("live", "Listening…"); startTimer(); });
   v.on("speech-start", () => { if (state === "live") statusEl.textContent = "Sophie is speaking…"; });
   v.on("speech-end", () => { if (state === "live") statusEl.textContent = "Listening…"; });
   v.on("volume-level", (level) => orb.style.setProperty("--lvl", (1 + Math.min(level || 0, 1) * 0.35).toFixed(3)));
@@ -1441,7 +1448,15 @@ async function startCall() {
   resetCall();
   setState("connecting", "Connecting…");
   try {
-    const config = await prepare();
+    // Opening the mic before the call exists means the permission prompt and any headset/Bluetooth switch into
+    // call mode finish before Sophie starts, instead of swallowing the start of her greeting. Held until she's live.
+    const mic = navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+      ? navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+          if (state !== "connecting") { stream.getTracks().forEach((t) => t.stop()); return; }
+          warmMic = stream;
+        })
+      : Promise.resolve();
+    const [, config] = await Promise.all([mic, prepare()]);
     const overrides = FAST_INTERRUPT && typeof config === "object"
       ? { stopSpeakingPlan: { ...config.stopSpeakingPlan, numWords: 1 } }
       : undefined;

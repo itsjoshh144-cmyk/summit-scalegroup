@@ -1,8 +1,8 @@
 {
   "name": "Brighton Boiler demo receptionist",
-  "firstMessage": "Hello, Brighton Boiler and Heating, you're speaking to Sophie. How can I help?",
+  "firstMessage": "<break time=\"1.0s\" /> Hello, Brighton Boiler and Heating, you're speaking to Sophie. How can I help?",
   "firstMessageMode": "assistant-speaks-first",
-  "firstMessageInterruptionsEnabled": true,
+  "firstMessageInterruptionsEnabled": false,
   "transcriber": {
     "provider": "deepgram",
     "model": "nova-2",
